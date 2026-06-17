@@ -1,4 +1,4 @@
-# TechMove GLMS — Technical Reflection Report
+# TechMove GLMS - Technical Reflection Report
 
 ## 1. Automated Testing in CI/CD Pipelines
 
@@ -6,18 +6,18 @@
 
 In a CI/CD (Continuous Integration / Continuous Deployment) pipeline, code changes are merged and deployed multiple times a day. Without automated tests, every deployment is a gamble. Automated testing acts as the safety net that catches breaking changes *before* they ever reach production.
 
-**The gate mechanism:** When a developer pushes code, the pipeline triggers a test run. If any test fails, the pipeline halts and the deployment is blocked — automatically, instantly, and without human intervention. This means a developer who accidentally breaks the contract creation endpoint at 11 PM is caught before anyone's customer sees a 500 error at 8 AM.
+**The gate mechanism:** When a developer pushes code, the pipeline triggers a test run. If any test fails, the pipeline halts and the deployment is blocked, automatically, instantly, and without human intervention. This means a developer who accidentally breaks the contract creation endpoint at 11 PM is caught before anyone's customer sees a 500 error at 8 AM.
 
-**Prevents regressions:** A regression is when a working feature breaks due to an unrelated change elsewhere. Integration tests like `CreateThenRead_DataIntegrity_ContractAppearsInList` verify the entire chain — HTTP → Controller → Service → Repository → Database — after every single commit. A developer who refactors the `ContractService` but breaks JSON serialisation will see it immediately.
+**Prevents regressions:** A regression is when a working feature breaks due to an unrelated change elsewhere. Integration tests like `CreateThenRead_DataIntegrity_ContractAppearsInList` verify the entire chain HTTP → Controller → Service → Repository → Database — after every single commit. A developer who refactors the `ContractService` but breaks JSON serialisation will see it immediately.
 
 **Documents expected behaviour:** Each test method name is a living specification:
-- `GetContracts_WithoutToken_Returns401Unauthorized` — security requirement
-- `UpdateContractStatus_WithInvalidStatus_Returns400` — validation requirement
-- `ActiveContracts_NotGreaterThanTotal` — business rule
+- `GetContracts_WithoutToken_Returns401Unauthorized` security requirement
+- `UpdateContractStatus_WithInvalidStatus_Returns400` validation requirement
+- `ActiveContracts_NotGreaterThanTotal` business rule
 
 These tests are far more reliable than written documentation because they execute and verify themselves.
 
-**Speed of feedback:** A CI runner executing 20 integration tests takes roughly 10 seconds. A manual tester running the same checks takes 20 minutes. At 10 deployments per day, automation saves over 3 hours of human time — and is more thorough.
+**Speed of feedback:** A CI runner executing 20 integration tests takes roughly 10 seconds. A manual tester running the same checks takes 20 minutes. At 10 deployments per day, automation saves over 3 hours of human time and is more thorough.
 
 ---
 
@@ -40,19 +40,18 @@ Stage 2 (aspnet:8.0)   — Runs only the compiled output (smaller, more secure)
 
 This means the final image contains no compiler toolchain, only the minimal runtime needed.
 
-### Docker Compose — Environment Parity
+### Docker Compose Environment Parity
 
 The `docker-compose.yml` defines the entire TechMove ecosystem declaratively:
 
 | Container | Role |
-|---|---|
 | `sql-server-db` | SQL Server 2022, same version everywhere |
 | `glms-backend-api` | Web API, configured via environment variables |
 | `glms-frontend-web` | MVC App, points to API by Docker service name |
 
-**Environment variables** replace all hard-coded connection strings. The MVC frontend finds the API at `http://glms-backend-api:8080/` — a Docker internal DNS name that resolves automatically within the `techmove-net` bridge network. This is identical in development, QA, and production.
+**Environment variables** replace all hard-coded connection strings. The MVC frontend finds the API at `http://glms-backend-api:8080/` a Docker internal DNS name that resolves automatically within the `techmove-net` bridge network. This is identical in development, QA, and production.
 
-**Health checks** ensure the API container waits for SQL Server to be ready before attempting database migrations — eliminating the race condition that causes containers to crash on first boot.
+**Health checks** ensure the API container waits for SQL Server to be ready before attempting database migrations eliminating the race condition that causes containers to crash on first boot.
 
 **Result:** A developer cloning the repository and running `docker compose up` gets a fully working, three-tier application in under two minutes. No SQL Server installation. No .NET SDK setup. No manual configuration. The environment is defined in code, version-controlled, and identical everywhere.
 
@@ -74,11 +73,11 @@ The TechMove GLMS follows a strict **three-tier separation**:
                                            Repository Pattern
                                                      │
                                             ┌────────▼─────────────┐
-                                            │  SQL Server Database  │
-                                            │  (Data Layer)         │
+                                            │  SQL Server Database │
+                                            │  (Data Layer)        │
                                             └──────────────────────┘
 ```
 
 **No database access in the MVC project.** All persistence goes through the API, which enforces authentication and business rules centrally. This means the presentation layer can be replaced (e.g., a mobile app) without touching business logic.
 
-**JWT authentication** ensures every API call is authorised. The MVC app obtains a token on startup and attaches it as a `Bearer` header to every request. Unauthenticated requests receive `401 Unauthorized` — verified by the integration test suite.
+**JWT authentication** ensures every API call is authorised. The MVC app obtains a token on startup and attaches it as a `Bearer` header to every request. Unauthenticated requests receive `401 Unauthorized` verified by the integration test suite.
