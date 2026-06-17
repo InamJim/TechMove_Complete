@@ -1,0 +1,19 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# Test results
+**/TestResults/
+
+# IDE files
+**/.vs/
+**/.vscode/
+**/*.user
+
+# Git
+.git/
+.gitignore
+
+# Docker files (no need to copy into image)
+**/Dockerfile
+docker-compose.yml

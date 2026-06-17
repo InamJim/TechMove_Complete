@@ -1,0 +1,98 @@
+﻿@model TechMove.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="text-center mb-5">
+
+    <h1 class="display-4">
+        TechMove GLMS
+    </h1>
+
+    <p class="lead">
+        Global Logistics Management System
+    </p>
+
+</div>
+
+<div class="row">
+
+    <!-- TOTAL CONTRACTS -->
+    <div class="col-md-4">
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-body text-center">
+
+                <h5>Total Contracts</h5>
+
+                <h1>
+                    @Model.TotalContracts
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ACTIVE CONTRACTS -->
+    <div class="col-md-4">
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-body text-center">
+
+                <h5>Active Contracts</h5>
+
+                <h1>
+                    @Model.ActiveContracts
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICE REQUESTS -->
+    <div class="col-md-4">
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-body text-center">
+
+                <h5>Service Requests</h5>
+
+                <h1>
+                    @Model.TotalServiceRequests
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="text-center mt-4">
+
+    <a asp-controller="Contract"
+       asp-action="Index"
+       class="btn btn-primary btn-lg m-2">
+
+        Manage Contracts
+
+    </a>
+
+    <a asp-controller="ServiceRequest"
+       asp-action="Index"
+       class="btn btn-success btn-lg m-2">
+
+        Manage Service Requests
+
+    </a>
+
+</div>

@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="TechMove.API/TechMove.API.csproj" Id="4ef8d9a7-8488-48bb-94af-df9318e32ce2" />
+  <Project Path="TechMove/TechMove.csproj" />
+  <Project Path="TechMoveData/TechMoveData.csproj" />
+  <Project Path="TechMoveRepo/TechMoveRepo.csproj" />
+  <Project Path="TechMoveServices/TechMoveServices.csproj" />
+  <Project Path="TechMoveTests/TechMoveTests.csproj" />
+</Solution>
