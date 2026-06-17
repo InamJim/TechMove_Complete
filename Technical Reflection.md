@@ -8,7 +8,7 @@ In a CI/CD (Continuous Integration / Continuous Deployment) pipeline, code chang
 
 **The gate mechanism:** When a developer pushes code, the pipeline triggers a test run. If any test fails, the pipeline halts and the deployment is blocked, automatically, instantly, and without human intervention. This means a developer who accidentally breaks the contract creation endpoint at 11 PM is caught before anyone's customer sees a 500 error at 8 AM.
 
-**Prevents regressions:** A regression is when a working feature breaks due to an unrelated change elsewhere. Integration tests like `CreateThenRead_DataIntegrity_ContractAppearsInList` verify the entire chain HTTP → Controller → Service → Repository → Database — after every single commit. A developer who refactors the `ContractService` but breaks JSON serialisation will see it immediately.
+**Prevents regressions:** A regression is when a working feature breaks due to an unrelated change elsewhere. Integration tests like `CreateThenRead_DataIntegrity_ContractAppearsInList` verify the entire chain HTTP → Controller → Service → Repository → Database after every single commit. A developer who refactors the `ContractService` but breaks JSON serialisation will see it immediately.
 
 **Documents expected behaviour:** Each test method name is a living specification:
 - `GetContracts_WithoutToken_Returns401Unauthorized` security requirement
