@@ -33,13 +33,6 @@ Docker packages the application alongside its *entire runtime environment* into 
 
 The TechMove solution uses a **multi-stage build pattern**:
 
-```
-Stage 1 (sdk:8.0)      — Compiles and publishes the application
-Stage 2 (aspnet:8.0)   — Runs only the compiled output (smaller, more secure)
-```
-
-This means the final image contains no compiler toolchain, only the minimal runtime needed.
-
 ### Docker Compose Environment Parity
 
 The `docker-compose.yml` defines the entire TechMove ecosystem declaratively:
