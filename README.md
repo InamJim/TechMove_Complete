@@ -1,4 +1,4 @@
-# TechMove GLMS — Global Logistics Management System
+# TechMove GLMS - Global Logistics Management System
 
 A three-tier ASP.NET Core 8 application with a REST API backend, MVC frontend, JWT authentication, integration tests, and full Docker orchestration.
 
@@ -93,7 +93,6 @@ curl http://localhost:5180/api/contracts \
 ## API Endpoints
 
 | Method | Endpoint | Description |
-|---|---|---|
 | `POST` | `/api/auth/login` | Get JWT token |
 | `GET` | `/api/contracts` | List contracts (filterable) |
 | `GET` | `/api/contracts/{id}` | Get contract by ID |
